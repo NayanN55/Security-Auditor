@@ -1,0 +1,14 @@
+.env
+.env.*
+.venv/
+__pycache__/
+*.pyc
+.terraform/
+*.tfstate
+*.tfstate.*
+terraform.tfstate.d/
+artifacts/
+node_modules/
+dist/
+.DS_Store
+github-upload/
