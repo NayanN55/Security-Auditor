@@ -1,0 +1,32 @@
+company: Securtias
+departments:
+  IT:
+    group_name: IT
+    policies:
+      - arn:aws:iam::aws:policy/SecurityAudit
+    users:
+      - jameson
+      - alex
+      - noah
+  HR:
+    group_name: HR
+    policies:
+      - arn:aws:iam::aws:policy/ReadOnlyAccess
+    users:
+      - priya
+      - mia
+      - dylan
+user_overrides:
+  alex:
+    extra_policies:
+      - arn:aws:iam::aws:policy/AWSSupportAccess
+  noah:
+    extra_policies:
+      - arn:aws:iam::aws:policy/IAMReadOnlyAccess
+policy_management:
+  managed_policy_arns:
+    - arn:aws:iam::aws:policy/SecurityAudit
+    - arn:aws:iam::aws:policy/ReadOnlyAccess
+    - arn:aws:iam::aws:policy/AWSSupportAccess
+    - arn:aws:iam::aws:policy/IAMReadOnlyAccess
+  detach_unknown_managed: true

@@ -1,0 +1,68 @@
+default_case: test1
+cases:
+  test1:
+    title: Cross-Department Drift
+    description: Baseline users are created, then several are placed in the wrong department to exercise group remapping.
+    instructions:
+      - Create the baseline IT and HR users from the hierarchy config.
+      - Move Jameson into HR even though he belongs in IT.
+      - Place Priya into IT even though she belongs in HR.
+      - Give Alex dual group membership to create a conflicting hierarchy node.
+    drift:
+      jameson:
+        groups:
+          - HR
+      alex:
+        groups:
+          - IT
+          - HR
+        extra_policies:
+          - arn:aws:iam::aws:policy/ReadOnlyAccess
+      priya:
+        groups:
+          - IT
+  test2:
+    title: Policy Spillover
+    description: Users keep their baseline identities, but direct policy attachments bleed across departments and create noisy exceptions.
+    instructions:
+      - Keep each user alive in AWS so the UI can render a real hierarchy.
+      - Add SecurityAudit directly to Mia even though she should only be HR read-only.
+      - Add ReadOnlyAccess directly to Alex to simulate manual help-desk escalation.
+      - Leave Noah with his intended IAMReadOnlyAccess so one user remains correct.
+    drift:
+      alex:
+        groups:
+          - IT
+        extra_policies:
+          - arn:aws:iam::aws:policy/AWSSupportAccess
+          - arn:aws:iam::aws:policy/ReadOnlyAccess
+      mia:
+        groups:
+          - HR
+        extra_policies:
+          - arn:aws:iam::aws:policy/SecurityAudit
+      dylan:
+        groups:
+          - IT
+  test3:
+    title: Conflicting Reporting Lines
+    description: Several users are attached to both departments to create hard conflicts that the remediator needs to untangle.
+    instructions:
+      - Keep the same company hierarchy as the source of truth.
+      - Give Alex and Priya dual IT and HR memberships so the graph shows conflicts.
+      - Move Dylan into IT to create a straightforward wrong-department remediation.
+      - Leave Jameson in IT so the graph shows a mix of good and bad placements.
+    drift:
+      alex:
+        groups:
+          - IT
+          - HR
+        extra_policies:
+          - arn:aws:iam::aws:policy/AWSSupportAccess
+      priya:
+        groups:
+          - HR
+          - IT
+      dylan:
+        groups:
+          - IT
