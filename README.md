@@ -1,6 +1,7 @@
 # Securtias IAM Hierarchy Demo
 
 Securtias is a Terraform and Python demo for provisioning IAM department hierarchies, seeding intentional access drift, and visualizing remediation paths in a browser.
+<img width="2207" height="1029" alt="image" src="https://github.com/user-attachments/assets/76dd5a0c-3f29-4b63-8170-6b63c8454e8d" />
 
 ## What it does
 - Creates IAM users, groups, and managed policy attachments with Terraform.
