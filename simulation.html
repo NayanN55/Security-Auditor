@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Securtias Offline Simulation</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Work+Sans:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body data-data-root="../artifacts/offline">
+    <div class="shell">
+      <header class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">Offline Simulation</p>
+          <h1>How The Drift Harness Works</h1>
+          <p class="lede">
+            This page renders the selected scenario without touching AWS. It uses
+            the same named case definitions as Terraform, but synthesizes the bad
+            state locally so you can inspect the motion and permissions safely.
+          </p>
+          <div class="controls">
+            <button class="toggle active" data-view="current">Current</button>
+            <button class="toggle" data-view="corrected">Corrected</button>
+            <button class="ghost" id="animateBtn">Move Users</button>
+            <a class="nav-link" href="index.html">Live View</a>
+          </div>
+        </div>
+        <div class="hero-panel">
+          <div class="stat">
+            <span class="stat-label">Users</span>
+            <span class="stat-value" id="statUsers">0</span>
+          </div>
+          <div class="stat">
+            <span class="stat-label">Mismatches</span>
+            <span class="stat-value" id="statMismatches">0</span>
+          </div>
+          <div class="stat">
+            <span class="stat-label">Missing</span>
+            <span class="stat-value" id="statMissing">0</span>
+          </div>
+        </div>
+      </header>
+
+      <main class="content">
+        <section class="card graph-card">
+          <div class="graph-header">
+            <div>
+              <h2>Simulation Graph</h2>
+              <p id="graphSubtitle">Current placement</p>
+            </div>
+            <span class="mode-pill" id="modePill">OFFLINE</span>
+            <div class="legend">
+              <span class="legend-item ok">Correct</span>
+              <span class="legend-item moved">Moved</span>
+              <span class="legend-item unassigned">Unassigned</span>
+              <span class="legend-item conflict">Conflict</span>
+              <span class="legend-item missing">Missing</span>
+            </div>
+          </div>
+          <div id="graph"></div>
+        </section>
+
+        <aside class="side-column">
+          <section class="card scenario-card">
+            <p class="eyebrow compact">Active Scenario</p>
+            <h2 id="caseTitle">Loading case</h2>
+            <p class="muted case-meta" id="caseName">test case</p>
+            <p class="muted" id="caseDescription">Scenario details appear here.</p>
+            <ol class="instruction-list" id="instructionList"></ol>
+          </section>
+
+          <section class="card explainer-card">
+            <h2>Offline Flow</h2>
+            <p class="muted">
+              Offline mode reads the correct hierarchy, overlays the chosen case
+              drift, and writes JSON to `artifacts/offline` so the graph can animate
+              without reaching AWS.
+            </p>
+            <ol class="instruction-list static-list">
+              <li>Pick a named case such as `test1` or `test2`.</li>
+              <li>Generate offline artifacts with `python app.py export --offline --demo-drift --test-case test1 --out-dir artifacts/offline`.</li>
+              <li>Open this page and click `Move Users` to watch the correction path.</li>
+            </ol>
+          </section>
+
+          <section class="card changes-card">
+            <h2>Corrections</h2>
+            <p class="muted">Moves needed to match the department policy map.</p>
+            <ul id="changeList"></ul>
+          </section>
+        </aside>
+      </main>
+    </div>
+
+    <div id="tooltip" class="tooltip" aria-hidden="true"></div>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
